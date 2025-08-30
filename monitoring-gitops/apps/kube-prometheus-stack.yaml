@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/bioyeneye/home-lab-k8s/monitoring-gitops
+    repoURL: https://github.com/bioyeneye/home-lab-k8s
     targetRevision: HEAD
-    path: kube-prometheus-stack
+    path: monitoring-gitops/kube-prometheus-stack
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
