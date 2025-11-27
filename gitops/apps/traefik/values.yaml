@@ -12,9 +12,16 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 1
 
+additionalArguments:
+  - "--ping=true"
+  - "--ping.entrypoint=web"
+
 api:
   dashboard: true
   insecure: false
+
+ping:
+  entryPoint: web
 
 # Expose the dashboard using the built-in IngressRoute
 ingressRoute:
