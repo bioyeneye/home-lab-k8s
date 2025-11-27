@@ -1,5 +1,4 @@
 resources:
   - helm-release.yaml
-  - values.yaml
-  - auth-secret.yaml/
+  - auth-secret.yaml
   - middleware-auth.yaml
