@@ -7,20 +7,35 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  source:
-    repoURL: https://traefik.github.io/charts
-    chart: traefik
-    targetRevision: 37.4.0
-    helm:
-      releaseName: traefik
-      valueFiles:
-        - values.yaml
+  sources:
+    # Helm chart source
+    - repoURL: https://traefik.github.io/charts
+      chart: traefik
+      targetRevision: 37.4.0
+      helm:
+        releaseName: traefik
+        valueFiles:
+          - $values/gitops/apps/traefik/values.yaml
+    
+    # Your GitHub repo with values
+    - repoURL: https://github.com/bioyeneye/home-lab-k8s.git
+      targetRevision: main
+      ref: values
+  
   destination:
     namespace: traefik
     server: https://kubernetes.default.svc
+  
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
