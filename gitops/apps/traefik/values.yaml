@@ -1,4 +1,8 @@
 # Traefik v3 (internal ingress controller)
+crds:
+  enabled: true
+  install: true
+  keep: false
 
 api:
   dashboard: true
