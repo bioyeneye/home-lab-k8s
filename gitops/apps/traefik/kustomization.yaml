@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: traefik
 
 resources:
-  - helm-release.yaml
   - auth-secret.yaml
   - middleware-auth.yaml
 

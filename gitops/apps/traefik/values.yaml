@@ -2,7 +2,6 @@
 crds:
   enabled: true
   install: true
-  keep: false
 
 api:
   dashboard: true

@@ -3,15 +3,31 @@ kind: Application
 metadata:
   name: traefik
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: 'https://github.com/bioyeneye/home-lab-k8s.git'
-    path: gitops/apps/traefik
-    targetRevision: main
+  
+  sources:
+    # Source 1: Traefik Helm chart
+    - repoURL: https://traefik.github.io/charts
+      chart: traefik
+      targetRevision: 37.4.0
+      helm:
+        releaseName: traefik
+        valueFiles:
+          - $values/gitops/apps/traefik/values.yaml
+    
+    # Source 2: Your GitHub repo with values and Kustomize resources
+    - repoURL: https://github.com/bioyeneye/home-lab-k8s.git
+      targetRevision: main
+      ref: values
+      path: gitops/apps/traefik
+  
   destination:
     server: https://kubernetes.default.svc
     namespace: traefik
+  
   syncPolicy:
     automated:
       prune: true
