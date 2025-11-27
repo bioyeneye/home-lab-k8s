@@ -15,12 +15,6 @@ spec:
       services:
         - name: whoami
           port: 80
-      middlewares:
-        # Using middlewares from traefik namespace
-        - name: security-headers
-          namespace: traefik
-        - name: compression
-          namespace: traefik
 
 ---
 # Alternative route with rate limiting (for testing)
@@ -43,8 +37,6 @@ spec:
         - name: whoami
           port: 80
       middlewares:
-        - name: rate-limit
-          namespace: traefik
         - name: strip-whoami-rl
           namespace: whoami
 
