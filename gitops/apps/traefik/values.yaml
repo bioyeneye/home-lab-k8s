@@ -29,9 +29,9 @@ ingressRoute:
 # LoadBalancer service using MetalLB
 service:
   type: LoadBalancer
-  loadBalancerIP: 172.16.0.103
   annotations:
     metallb.universe.tf/address-pool: default-pool
+    metallb.universe.tf/loadBalancerIPs: 172.16.0.103
 
 # Entrypoints - Use high ports for container, expose standard ports via service
 ports:
