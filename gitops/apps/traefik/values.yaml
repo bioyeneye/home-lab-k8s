@@ -20,9 +20,6 @@ api:
   dashboard: true
   insecure: false
 
-ping:
-  entryPoint: web
-
 # Expose the dashboard using the built-in IngressRoute
 ingressRoute:
   dashboard:
