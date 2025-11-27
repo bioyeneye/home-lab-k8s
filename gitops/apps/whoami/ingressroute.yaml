@@ -10,7 +10,7 @@ spec:
     - web
     - websecure
   routes:
-    - match: Host(`k8s-whoami.buildplatform.net`) || Host(`whoami.local`) || PathPrefix(`/whoami`)
+    - match: Host(`k8s-whoami.buildplatform.net`) || PathPrefix(`/whoami`)
       kind: Rule
       services:
         - name: whoami
