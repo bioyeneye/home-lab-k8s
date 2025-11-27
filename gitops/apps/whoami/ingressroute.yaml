@@ -1,0 +1,61 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: whoami
+  labels:
+    app: whoami
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`whoami.local`) || PathPrefix(`/whoami`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+      middlewares:
+        # Using middlewares from traefik namespace
+        - name: security-headers
+          namespace: traefik
+        - name: compression
+          namespace: traefik
+
+---
+# Alternative route with rate limiting (for testing)
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami-ratelimited
+  namespace: whoami
+  labels:
+    app: whoami
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    # Rate-limited endpoint at /whoami-rl
+    - match: PathPrefix(`/whoami-rl`)
+      kind: Rule
+      services:
+        - name: whoami
+          port: 80
+      middlewares:
+        - name: rate-limit
+          namespace: traefik
+        - name: strip-whoami-rl
+          namespace: whoami
+
+---
+# Middleware to strip the /whoami-rl prefix
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-whoami-rl
+  namespace: whoami
+spec:
+  stripPrefix:
+    prefixes:
+      - /whoami-rl
