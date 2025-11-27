@@ -12,6 +12,32 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 1
 
+ping:
+  enabled: true  # ← Enable ping endpoint
+
+# Update probe configurations
+livenessProbe:
+  httpGet:
+    path: /ping
+    port: 9000
+    scheme: HTTP
+  failureThreshold: 3
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
+readinessProbe:
+  httpGet:
+    path: /ping
+    port: 9000
+    scheme: HTTP
+  failureThreshold: 1
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 2
+
 api:
   dashboard: true
   insecure: false
@@ -38,7 +64,7 @@ ports:
   traefik:
     port: 9000
     expose:
-      default: false
+      default: true
     protocol: TCP
 
   web:
