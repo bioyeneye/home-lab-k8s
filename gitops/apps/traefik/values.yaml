@@ -3,6 +3,15 @@ crds:
   enabled: true
   install: true
 
+deployment:
+  enabled: true
+  kind: Deployment
+  replicas: 2
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
 api:
   dashboard: true
   insecure: false
