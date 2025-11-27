@@ -12,10 +12,6 @@ podDisruptionBudget:
   enabled: true
   minAvailable: 1
 
-additionalArguments:
-  - "--ping=true"
-  - "--ping.entrypoint=web"
-
 api:
   dashboard: true
   insecure: false
