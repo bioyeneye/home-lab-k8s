@@ -24,7 +24,7 @@ service:
   annotations:
     metallb.universe.tf/address-pool: default-pool
 
-# Entrypoints (keep defaults — DO NOT change ports)
+# Entrypoints - Use high ports for container, expose standard ports via service
 ports:
   traefik:
     port: 9000
@@ -33,18 +33,20 @@ ports:
     protocol: TCP
 
   web:
-    port: 80
+    port: 8000              # Container port (unprivileged)
     expose:
       default: true
+    exposedPort: 80         # Service port (what external world sees)
     protocol: TCP
 
   websecure:
-    port: 443
+    port: 8443              # Container port (unprivileged)
     expose:
       default: true
+    exposedPort: 443        # Service port (what external world sees)
     protocol: TCP
     tls:
-      enabled: false   # TLS handled by external Traefik VM
+      enabled: false        # TLS handled by external Traefik VM
 
 # Set Traefik as the default Ingress controller
 ingressClass:
