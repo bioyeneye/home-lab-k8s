@@ -1,0 +1,64 @@
+# Traefik v3 (internal ingress controller)
+
+api:
+  dashboard: true
+  insecure: false
+
+# Expose the dashboard using the built-in IngressRoute
+ingressRoute:
+  dashboard:
+    enabled: true
+    entryPoints:
+      - web
+    middlewares:
+      - name: dashboard-auth
+        namespace: traefik
+
+# LoadBalancer service using MetalLB
+service:
+  type: LoadBalancer
+  loadBalancerIP: 172.16.0.103
+  annotations:
+    metallb.universe.tf/address-pool: default-pool
+
+# Entrypoints (keep defaults — DO NOT change ports)
+ports:
+  traefik:
+    port: 9000
+    expose:
+      default: false
+    protocol: TCP
+
+  web:
+    port: 80
+    expose:
+      default: true
+    protocol: TCP
+
+  websecure:
+    port: 443
+    expose:
+      default: true
+    protocol: TCP
+    tls:
+      enabled: false   # TLS handled by external Traefik VM
+
+# Set Traefik as the default Ingress controller
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: traefik
+
+# Providers
+providers:
+  kubernetesCRD:
+    enabled: true
+  kubernetesIngress:
+    enabled: true
+
+# Logging
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
