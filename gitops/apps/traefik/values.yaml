@@ -14,7 +14,7 @@ podDisruptionBudget:
 
 api:
   dashboard: true
-  insecure: false
+  insecure: true
 
 # Expose the dashboard using the built-in IngressRoute
 ingressRoute:
@@ -22,9 +22,6 @@ ingressRoute:
     enabled: true
     entryPoints:
       - web
-    middlewares:
-      - name: dashboard-auth
-        namespace: traefik
 
 # LoadBalancer service using MetalLB
 service:
