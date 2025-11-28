@@ -15,8 +15,3 @@ spec:
       services:
         - name: todo-api
           port: 80
-      middlewares:
-        - name: security-headers
-          namespace: traefik
-        - name: compression
-          namespace: traefik
