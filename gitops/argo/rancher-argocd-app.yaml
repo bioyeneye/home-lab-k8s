@@ -12,7 +12,7 @@ spec:
     # Source 1: Rancher Helm Chart
     - chart: rancher
       repoURL: https://releases.rancher.com/server-charts/stable
-      targetRevision: 2.9.3
+      targetRevision: 2.13.0
       helm:
         releaseName: rancher
         valueFiles:

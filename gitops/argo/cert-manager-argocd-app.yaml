@@ -11,7 +11,7 @@ spec:
   source:
     chart: cert-manager
     repoURL: https://charts.jetstack.io
-    targetRevision: v1.16.2
+    targetRevision: v1.18.2
     helm:
       releaseName: cert-manager
       values: |
@@ -62,6 +62,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  
-  # Lower sync wave to install before Rancher
-  syncWave: -1
