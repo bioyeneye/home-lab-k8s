@@ -1,0 +1,65 @@
+# Rancher Helm Chart Values
+
+# Hostname for Rancher - use IP-based access
+hostname: 172.16.0.104.sslip.io
+
+# Number of Rancher replicas
+replicas: 1
+
+# Disable ingress - we'll use LoadBalancer service
+ingress:
+  enabled: false
+
+# Bootstrap password for first login
+bootstrapPassword: "password"
+
+# TLS configuration - use rancher self-signed
+tls: rancher
+
+# Service configuration - LoadBalancer with MetalLB
+service:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/address-pool: default-pool
+    metallb.universe.tf/loadBalancerIPs: "172.16.0.104"
+
+# Resources
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+
+# Rancher image configuration
+rancherImage: rancher/rancher
+rancherImageTag: v2.9.3
+
+# Rancher image pull policy
+rancherImagePullPolicy: IfNotPresent
+
+# Additional environment variables
+extraEnv:
+  - name: CATTLE_TLS_MIN_VERSION
+    value: "1.2"
+  - name: CATTLE_PROMETHEUS_METRICS
+    value: "true"
+
+# Audit logging
+auditLog:
+  level: 0
+  maxAge: 1
+  maxBackup: 1
+  maxSize: 100
+
+# Liveness and readiness probes
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 5
+
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  failureThreshold: 5
