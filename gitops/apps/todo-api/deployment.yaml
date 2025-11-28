@@ -32,7 +32,7 @@ spec:
               protocol: TCP
           env:
             - name: PYTHONPATH
-              value: "/app"
+              value: "/app/src"
             - name: DATABASE_URL
               value: "sqlite:///./data/todos.db"
           volumeMounts:
