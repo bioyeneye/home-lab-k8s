@@ -8,13 +8,11 @@ spec:
   source:
     repoURL: https://github.com/bioyeneye/home-lab-k8s.git
     targetRevision: HEAD
-    path: apps/monitoring
+    path: gitops/argo/monitoring-apps
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
